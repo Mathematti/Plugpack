@@ -107,7 +107,7 @@ class _PluginGUIState extends State<PluginGUI> {
 
   void save(BuildContext context) {
     Server.selectedServer
-        .addPlugin(nameController.text, _pluginType, "https://myriadical.com");
+        .addPlugin(nameController.text, _pluginType, linkController.text);
     Navigator.of(context).pop(true);
   }
 
