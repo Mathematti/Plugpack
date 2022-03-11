@@ -1,16 +1,11 @@
-# plugpack_flutter
+# Plugpack
+This JavaFX application allows you to easily create Plugin-packs to use as a "Modpack" with [itzg's minecraft server docker container](https://github.com/itzg/docker-minecraft-server).
 
-Plugpack - create Minecraft plugin packs with ease.
+## Why would you want this?
+I know that the docker image lets you directly and automatically download plugins from various sources but the advantage of creating a plugin pack beforehand and then only specifying that as a modpack is, that you can test a pack before putting it on your production servers. I've already had a ton of issues with faulty behavior after updating a plugin (ranging from just that plugin not working to all of my MySQL connections breaking).
 
-## Getting Started
+## How does it work?
+After you specify all your plugins and other options, this application creates a Shell-script that you can easily execute on your Linux server. It uses the Spiget API to download Spigot plugins and wget to download Bukkit or other directly downloadable plugins. Additionally, it can also use other methods that you specify.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## State of development
+I personally use Plugpack for all of my servers on [Myriadical](https://myriadical.com) but it is far from finished and I will continue to regularly add new features.
