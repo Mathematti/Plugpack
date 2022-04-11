@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plugpack_flutter/functions/plugin/plugin.dart';
+import 'package:plugpack_flutter/functions/plugin_group.dart';
 import 'package:plugpack_flutter/functions/server.dart';
-import 'package:plugpack_flutter/main.dart';
 
 class PluginListGUI extends StatefulWidget {
   const PluginListGUI({Key? key}) : super(key: key);
@@ -12,9 +12,9 @@ class PluginListGUI extends StatefulWidget {
 
 class _PluginListGUIState extends State<PluginListGUI> {
   void delete() {
-    Server.servers.remove(Server.selectedServer);
-    Server.selectedServer = Server("");
-    contentStateKey.currentState!.updateIndex(1);
+    Server.selectedServer.pluginGroups.remove(PluginGroup.selectedPluginGroup);
+    PluginGroup.selectedPluginGroup = null;
+    Navigator.of(context).pop(true);
   }
 
   @override
@@ -24,7 +24,7 @@ class _PluginListGUIState extends State<PluginListGUI> {
         centerTitle: true,
         backgroundColor: Colors.teal,
         title: Text(
-            "Plugpack - ${Server.selectedServer.serverName == "" ? "No server selected" : "Server \"" + Server.selectedServer.serverName + "\""}"),
+            "Plugpack - ${PluginGroup.selectedPluginGroup!.groupName == "" ? "No server selected" : "Plugin group \"" + PluginGroup.selectedPluginGroup!.groupName + "\""}"),
         actions: [
           IconButton(
             onPressed: () {
@@ -38,7 +38,7 @@ class _PluginListGUIState extends State<PluginListGUI> {
         children: [
           Container(
             child: Text(
-                Server.selectedServer.serverName == ""
+                PluginGroup.selectedPluginGroup!.groupName == ""
                     ? "Please select/create a server first!"
                     : "Plugins:",
                 style: const TextStyle(fontSize: 18)),
@@ -46,9 +46,9 @@ class _PluginListGUIState extends State<PluginListGUI> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: Server.selectedServer.plugins.length,
+              itemCount: PluginGroup.selectedPluginGroup!.plugins.length,
               itemBuilder: (context, index) {
-                final plugin = Server.selectedServer.plugins[index];
+                final plugin = PluginGroup.selectedPluginGroup!.plugins[index];
                 return Card(
                   elevation: 5,
                   color: Colors.teal.shade100,
@@ -64,7 +64,7 @@ class _PluginListGUIState extends State<PluginListGUI> {
                     title: plugin.buildTitle(context),
                     contentPadding: const EdgeInsets.all(10),
                     onTap: () {
-                      Server.selectedPlugin = plugin;
+                      PluginGroup.selectedPlugin = plugin;
                       Navigator.of(context)
                           .pushNamed("/modifyPlugin")
                           .then((_) {
@@ -78,7 +78,6 @@ class _PluginListGUIState extends State<PluginListGUI> {
           ),
         ],
       ),
-      bottomNavigationBar: const NavBar(),
       floatingActionButton: FloatingActionButton(
         tooltip: "Add plugin",
         onPressed: () {
@@ -106,7 +105,7 @@ class _PluginGUIState extends State<PluginGUI> {
   PluginType _pluginType = PluginType.custom;
 
   void save(BuildContext context) {
-    Server.selectedServer
+    PluginGroup.selectedPluginGroup!
         .addPlugin(nameController.text, _pluginType, linkController.text);
     Navigator.of(context).pop(true);
   }
@@ -118,7 +117,8 @@ class _PluginGUIState extends State<PluginGUI> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey.shade700,
-        title: Text("Add plugin to ${Server.selectedServer.serverName}"),
+        title:
+            Text("Add plugin to ${PluginGroup.selectedPluginGroup!.groupName}"),
         actions: [
           IconButton(
             onPressed: () {
@@ -221,21 +221,21 @@ class ModifyPluginGUI extends StatefulWidget {
 
 class _ModifyPluginGUIState extends State<ModifyPluginGUI> {
   final nameController =
-      TextEditingController(text: Server.selectedPlugin.name);
+      TextEditingController(text: PluginGroup.selectedPlugin.name);
   final linkController =
-      TextEditingController(text: Server.selectedPlugin.download());
+      TextEditingController(text: PluginGroup.selectedPlugin.download());
 
-  PluginType _pluginType = Server.selectedPlugin.type;
+  PluginType _pluginType = PluginGroup.selectedPlugin.type;
 
   void save(BuildContext context) {
-    Server.selectedServer.plugins.remove(Server.selectedPlugin);
-    Server.selectedServer
+    PluginGroup.selectedPluginGroup!.plugins.remove(PluginGroup.selectedPlugin);
+    PluginGroup.selectedPluginGroup!
         .addPlugin(nameController.text, _pluginType, "https://myriadical.com");
     Navigator.of(context).pop(true);
   }
 
   void delete() {
-    Server.selectedServer.plugins.remove(Server.selectedPlugin);
+    PluginGroup.selectedPluginGroup!.plugins.remove(PluginGroup.selectedPlugin);
     Navigator.of(context).pop(true);
   }
 
@@ -246,8 +246,8 @@ class _ModifyPluginGUIState extends State<ModifyPluginGUI> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey.shade700,
-        title: Text("Modify plugin \"${Server.selectedPlugin.name}\" "
-            "for server \"${Server.selectedServer.serverName}\""),
+        title: Text("Modify plugin \"${PluginGroup.selectedPlugin.name}\" "
+            "for server \"${PluginGroup.selectedPluginGroup!.groupName}\""),
         actions: [
           IconButton(
             onPressed: () {

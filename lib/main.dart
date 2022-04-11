@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:plugpack_flutter/gui/plugin_group_gui.dart';
 import 'package:plugpack_flutter/gui/script_gui.dart';
 import 'package:plugpack_flutter/gui/server_gui.dart';
-import 'package:plugpack_flutter/functions/server.dart';
+import 'package:plugpack_flutter/functions/plugin_group.dart';
 import 'package:plugpack_flutter/gui/plugin_gui.dart';
+
+import 'functions/server.dart';
 
 void main() {
   runApp(Content(key: contentStateKey));
@@ -19,7 +22,7 @@ class _PlugpackMainState extends State<PlugpackMain> {
   int totalPlugins() {
     int plugins = 0;
 
-    for (Server server in Server.servers) {
+    for (PluginGroup server in PluginGroup.pluginGroups) {
       plugins += server.plugins.length;
     }
 
@@ -37,6 +40,7 @@ class _PlugpackMainState extends State<PlugpackMain> {
       body: Container(
         child: Text(
           "You currently have ${Server.servers.length} servers with "
+          "${PluginGroup.pluginGroups.length} plugin groups and "
           "a total of ${totalPlugins()} plugins set up.",
           style: const TextStyle(fontSize: 16),
         ),
@@ -86,7 +90,7 @@ class NavBarState extends State<NavBar> {
           BottomNavigationBarItem(
               icon: Icon(Icons.dns_rounded), label: "Servers"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.extension_rounded), label: "Plugins"),
+              icon: Icon(Icons.extension_rounded), label: "Plugin groups"),
           BottomNavigationBarItem(
               icon: Icon(Icons.assignment_rounded), label: "Script"),
         ],
@@ -105,7 +109,7 @@ class ContentState extends State<Content> {
   final List _children = [
     const PlugpackMain(),
     const ServerListGUI(),
-    const PluginListGUI(),
+    const AllPluginGroupListGUI(),
     const ScriptGUI(),
   ];
 
@@ -124,15 +128,21 @@ class ContentState extends State<Content> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData.light(),
-        darkTheme: ThemeData.dark(),
-        themeMode: ThemeMode.system,
-        home: Builder(builder: (context) => _children[_currentIndex]),
-        routes: {
-          "/addServer": (BuildContext context) => ServerGUI(),
-          "/addPlugin": (BuildContext context) => const PluginGUI(),
-          "/modifyPlugin": (BuildContext context) => const ModifyPluginGUI(),
-        });
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.system,
+      home: Builder(
+        builder: (context) => _children[_currentIndex],
+      ),
+      routes: {
+        "/addServer": (BuildContext context) => ServerGUI(),
+        "/addPluginGroup": (BuildContext context) => PluginGroupGUI(),
+        "/listPluginGroups": (BuildContext context) => const PluginGroupListGUI(),
+        "/addPlugin": (BuildContext context) => const PluginGUI(),
+        "/modifyPlugin": (BuildContext context) => const ModifyPluginGUI(),
+        "/listPlugins": (BuildContext context) => const PluginListGUI(),
+      },
+    );
   }
 }
 

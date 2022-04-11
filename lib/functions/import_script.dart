@@ -1,4 +1,5 @@
 import 'package:plugpack_flutter/functions/plugin/plugin.dart';
+import 'package:plugpack_flutter/functions/plugin_group.dart';
 import 'package:plugpack_flutter/functions/server.dart';
 
 class ImportScript {
@@ -20,7 +21,7 @@ class ImportScript {
       spigotPlugins.removeLast();
       for (String plugin in spigotPlugins) {
         try {
-          Server.servers[Server.servers.length - 1].addPlugin(
+          PluginGroup.pluginGroups[PluginGroup.pluginGroups.length - 1].addPlugin(
               plugin.substring(0, plugin.indexOf(":")),
               PluginType.spigot,
               plugin.substring(plugin.indexOf(":") + 1));
@@ -35,7 +36,7 @@ class ImportScript {
       directPlugins.removeLast();
       for (String plugin in directPlugins) {
         try {
-          Server.servers[Server.servers.length - 1].addPlugin(
+          PluginGroup.pluginGroups[PluginGroup.pluginGroups.length - 1].addPlugin(
               plugin.substring(0, plugin.indexOf(":")),
               PluginType.direct,
               plugin.substring(plugin.indexOf(":") + 1));
@@ -50,7 +51,7 @@ class ImportScript {
       customPlugins.removeLast();
       for (String plugin in customPlugins) {
         try {
-          Server.servers[Server.servers.length - 1].addPlugin(
+          PluginGroup.pluginGroups[PluginGroup.pluginGroups.length - 1].addPlugin(
               plugin.substring(0, plugin.indexOf(":")),
               PluginType.custom,
               plugin
@@ -60,7 +61,7 @@ class ImportScript {
       }
     }
 
-    for (Server server in Server.servers) {
+    for (PluginGroup server in PluginGroup.pluginGroups) {
       server.plugins.sort((a, b) => a.name.compareTo(b.name));
     }
   }

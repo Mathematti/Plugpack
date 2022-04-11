@@ -50,7 +50,11 @@ class _ServerListGUIState extends State<ServerListGUI> {
                     contentPadding: const EdgeInsets.all(10),
                     onTap: () {
                       Server.selectedServer = server;
-                      contentStateKey.currentState!.updateIndex(2);
+                      Navigator.of(context)
+                          .pushNamed("/listPluginGroups")
+                          .then((_) {
+                        setState(() {});
+                      });
                       if (kDebugMode) {
                         print(server.serverName);
                       }
