@@ -12,7 +12,6 @@ import 'package:plugpack_flutter/gui/server/server_gui.dart';
 import 'package:plugpack_flutter/gui/server/add_server_gui.dart';
 import 'package:plugpack_flutter/gui/script/script_gui.dart';
 
-
 void main() {
   runApp(Content(key: contentStateKey));
 }
@@ -35,6 +34,10 @@ class _PlugpackMainState extends State<PlugpackMain> {
     return plugins;
   }
 
+  void buttonPress() {
+    showLicensePage(context: context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +45,12 @@ class _PlugpackMainState extends State<PlugpackMain> {
         centerTitle: true,
         backgroundColor: Colors.teal,
         title: const Text("Plugpack by Mathematti"),
+        actions: [
+          IconButton(
+            onPressed: buttonPress,
+            icon: const Icon(Icons.info_rounded),
+          )
+        ],
       ),
       body: Container(
         child: Text(
@@ -143,7 +152,8 @@ class ContentState extends State<Content> {
       routes: {
         "/addServer": (BuildContext context) => ServerGUI(),
         "/addPluginGroup": (BuildContext context) => const PluginGroupGUI(),
-        "/listPluginGroups": (BuildContext context) => const PluginGroupListGUI(),
+        "/listPluginGroups": (BuildContext context) =>
+            const PluginGroupListGUI(),
         "/addPlugin": (BuildContext context) => const AddPluginGUI(),
         "/modifyPlugin": (BuildContext context) => const ModifyPluginGUI(),
         "/listPlugins": (BuildContext context) => const PluginListGUI(),
