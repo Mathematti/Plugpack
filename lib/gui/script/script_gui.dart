@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plugpack_flutter/functions/generate_script.dart';
 import 'package:plugpack_flutter/functions/import_script.dart';
-
-import '../main.dart';
+import 'package:plugpack_flutter/main.dart';
 
 class ScriptGUI extends StatefulWidget {
   const ScriptGUI({Key? key}) : super(key: key);

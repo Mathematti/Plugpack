@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:plugpack_flutter/gui/plugin_group_gui.dart';
-import 'package:plugpack_flutter/gui/script_gui.dart';
-import 'package:plugpack_flutter/gui/server_gui.dart';
-import 'package:plugpack_flutter/functions/plugin_group.dart';
-import 'package:plugpack_flutter/gui/plugin_gui.dart';
 
-import 'functions/server.dart';
+import 'package:plugpack_flutter/functions/server.dart';
+import 'package:plugpack_flutter/functions/plugin_group.dart';
+
+import 'package:plugpack_flutter/gui/plugin/list_plugin_gui.dart';
+import 'package:plugpack_flutter/gui/plugin/add_plugin_gui.dart';
+import 'package:plugpack_flutter/gui/plugin/modify_plugin_gui.dart';
+import 'package:plugpack_flutter/gui/plugin_group/list_plugin_group_gui.dart';
+import 'package:plugpack_flutter/gui/plugin_group/add_plugin_group_gui.dart';
+import 'package:plugpack_flutter/gui/server/server_gui.dart';
+import 'package:plugpack_flutter/gui/server/add_server_gui.dart';
+import 'package:plugpack_flutter/gui/script/script_gui.dart';
+
 
 void main() {
   runApp(Content(key: contentStateKey));
@@ -136,9 +142,9 @@ class ContentState extends State<Content> {
       ),
       routes: {
         "/addServer": (BuildContext context) => ServerGUI(),
-        "/addPluginGroup": (BuildContext context) => PluginGroupGUI(),
+        "/addPluginGroup": (BuildContext context) => const PluginGroupGUI(),
         "/listPluginGroups": (BuildContext context) => const PluginGroupListGUI(),
-        "/addPlugin": (BuildContext context) => const PluginGUI(),
+        "/addPlugin": (BuildContext context) => const AddPluginGUI(),
         "/modifyPlugin": (BuildContext context) => const ModifyPluginGUI(),
         "/listPlugins": (BuildContext context) => const PluginListGUI(),
       },
