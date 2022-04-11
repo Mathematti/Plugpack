@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:plugpack_flutter/functions/plugin/plugin.dart';
 import 'package:plugpack_flutter/functions/plugin/bukkit_plugin.dart';
 import 'package:plugpack_flutter/functions/plugin/custom_plugin.dart';
 import 'package:plugpack_flutter/functions/plugin/direct_plugin.dart';
 import 'package:plugpack_flutter/functions/plugin/spigot_plugin.dart';
 
+part 'plugin_group.g.dart';
+
+@JsonSerializable()
 class PluginGroup {
   static List<PluginGroup> pluginGroups = [];
   static PluginGroup? selectedPluginGroup;
@@ -13,11 +17,13 @@ class PluginGroup {
   final String groupName;
   List<Plugin> plugins = [];
 
-  PluginGroup(this.groupName);
+  PluginGroup(this.groupName) {
+    pluginGroups.add(this);
+  }
 
   static void addPluginGroup(String name) {
     if (name != "") {
-      pluginGroups.add(PluginGroup(name));
+      PluginGroup(name);
     }
   }
 
@@ -41,4 +47,8 @@ class PluginGroup {
       style: const TextStyle(color: Colors.black),
     );
   }
+
+  factory PluginGroup.fromJson(Map<String, dynamic> json) =>
+      _$PluginGroupFromJson(json);
+  Map<String, dynamic> toJson() => _$PluginGroupToJson(this);
 }

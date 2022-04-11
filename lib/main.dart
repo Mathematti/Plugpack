@@ -28,8 +28,8 @@ class _PlugpackMainState extends State<PlugpackMain> {
   int totalPlugins() {
     int plugins = 0;
 
-    for (PluginGroup server in PluginGroup.pluginGroups) {
-      plugins += server.plugins.length;
+    for (PluginGroup group in PluginGroup.pluginGroups) {
+      plugins += group.plugins.length;
     }
 
     return plugins;

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:plugpack_flutter/functions/plugin_group.dart';
 import 'package:plugpack_flutter/functions/plugin/plugin.dart';
 import 'package:plugpack_flutter/functions/plugin/custom_plugin.dart';
@@ -7,60 +9,19 @@ import 'package:plugpack_flutter/functions/server.dart';
 
 class GenerateScript {
   static String generateScript() {
-    // Config
-    StringBuffer config = StringBuffer("# Servers: ");
-    for (Server server in Server.servers) {
-      config.write("${server.serverName},");
-    }
-    config.writeln(" ServersEnd");
-
-    config.write("# Groups: ");
-    for (PluginGroup group in PluginGroup.pluginGroups) {
-      config.write("${group.groupName},");
-    }
-    config.writeln(" GroupsEnd");
+    StringBuffer config = StringBuffer("# Plugpack-Config\n");
 
     for (Server server in Server.servers) {
-      config.write("# ${server.serverName}-Groups: ");
-      for (PluginGroup group in server.pluginGroups) {
-        config.write("${group.groupName},");
-      }
-      config.writeln("${server.serverName}-GroupsEnd");
+      config.writeln("# ${jsonEncode(server)}");
     }
 
-    for (PluginGroup group in PluginGroup.pluginGroups) {
-      config.write("# ${group.groupName}-SpigotPlugins: ");
-      for (Plugin plugin in group.plugins) {
-        if (plugin is SpigotPlugin) {
-          config.write("${plugin.name}:.${plugin.id}/,");
-        }
-      }
-      config.writeln(" ${group.groupName}-SpigotPluginsEnd");
-
-      config.write("# ${group.groupName}-DirectPlugins: ");
-      for (Plugin plugin in group.plugins) {
-        if (plugin is DirectPlugin) {
-          config.write("${plugin.name}:${plugin.download()},");
-        }
-      }
-      config.writeln(" ${group.groupName}-DirectPluginsEnd");
-
-      config.write("# ${group.groupName}-CustomPlugins: ");
-      for (Plugin plugin in group.plugins) {
-        if (plugin is CustomPlugin) {
-          config.write(
-              "${plugin.name}:${plugin.download().replaceAll("\n", "@plclb@")}@plcs@");
-        }
-      }
-      config.writeln(" ${group.groupName}-CustomPluginsEnd");
-    }
+    config.writeln("# Plugpack-Config-End");
     config.writeln();
-    config.writeln("sudo rm -f -r /var/lib/Plugpack/*");
-    config.writeln();
-
 
     // Actual execution
     StringBuffer output = StringBuffer(config.toString());
+    output.writeln("sudo rm -rf /var/lib/Plugpack/*");
+    output.writeln();
 
     for (Server server in Server.servers) {
       output.writeln(

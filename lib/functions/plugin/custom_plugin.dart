@@ -1,13 +1,21 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:plugpack_flutter/functions/plugin/plugin.dart';
 
-class CustomPlugin extends Plugin {
-  final String _downloadCommand;
+part 'custom_plugin.g.dart';
 
-  CustomPlugin(String name, PluginType type, this._downloadCommand)
+@JsonSerializable()
+class CustomPlugin extends Plugin {
+  final String downloadCommand;
+
+  CustomPlugin(String name, PluginType type, this.downloadCommand)
       : super(name, type);
 
   @override
   String download() {
-    return _downloadCommand;
+    return downloadCommand;
   }
+
+  factory CustomPlugin.fromJson(Map<String, dynamic> json) =>
+      _$CustomPluginFromJson(json);
+  Map<String, dynamic> toJson() => _$CustomPluginToJson(this);
 }

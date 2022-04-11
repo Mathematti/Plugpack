@@ -1,68 +1,19 @@
-import 'package:plugpack_flutter/functions/plugin/plugin.dart';
-import 'package:plugpack_flutter/functions/plugin_group.dart';
+import 'dart:convert';
 import 'package:plugpack_flutter/functions/server.dart';
 
 class ImportScript {
   static void importScript(String script) {
     String serversString = script.substring(
-        script.indexOf("# Servers: ") + "# Servers: ".length,
-        script.indexOf(" ServersEnd"));
-    List<String> servers = serversString.split(",");
+        script.indexOf("# Plugpack-Config"),
+        script.indexOf("# Plugpack-Config-End"));
+    List<String> servers = serversString.split("\n");
+    servers.removeAt(0);
     servers.removeLast();
 
     for (String server in servers) {
-      Server.addServer(server);
-
-      String spigotPluginString = script.substring(
-          (script.indexOf("# " + server + "-SpigotPlugins: ") +
-              ("# " + server + "-SpigotPlugins: ").length),
-          script.indexOf(" " + server + "-SpigotPluginsEnd"));
-      List<String> spigotPlugins = spigotPluginString.split(",");
-      spigotPlugins.removeLast();
-      for (String plugin in spigotPlugins) {
-        try {
-          PluginGroup.pluginGroups[PluginGroup.pluginGroups.length - 1].addPlugin(
-              plugin.substring(0, plugin.indexOf(":")),
-              PluginType.spigot,
-              plugin.substring(plugin.indexOf(":") + 1));
-        } on Exception catch (_) {}
-      }
-
-      String directPluginString = script.substring(
-          (script.indexOf("# " + server + "-DirectPlugins: ") +
-              ("# " + server + "-DirectPlugins: ").length),
-          script.indexOf(" " + server + "-DirectPluginsEnd"));
-      List<String> directPlugins = directPluginString.split(",");
-      directPlugins.removeLast();
-      for (String plugin in directPlugins) {
-        try {
-          PluginGroup.pluginGroups[PluginGroup.pluginGroups.length - 1].addPlugin(
-              plugin.substring(0, plugin.indexOf(":")),
-              PluginType.direct,
-              plugin.substring(plugin.indexOf(":") + 1));
-        } on Exception catch (_) {}
-      }
-
-      String customPluginString = script.substring(
-          (script.indexOf("# " + server + "-CustomPlugins: ") +
-              ("# " + server + "-CustomPlugins: ").length),
-          script.indexOf(" " + server + "-CustomPluginsEnd"));
-      List<String> customPlugins = customPluginString.split("@plcs@");
-      customPlugins.removeLast();
-      for (String plugin in customPlugins) {
-        try {
-          PluginGroup.pluginGroups[PluginGroup.pluginGroups.length - 1].addPlugin(
-              plugin.substring(0, plugin.indexOf(":")),
-              PluginType.custom,
-              plugin
-                  .substring(plugin.indexOf(":") + 1)
-                  .replaceAll("@plclb@", "\n"));
-        } on Exception catch (_) {}
-      }
+      Map<String, dynamic> json = jsonDecode(server.substring(2));
+      Server.fromJson(json);
     }
 
-    for (PluginGroup server in PluginGroup.pluginGroups) {
-      server.plugins.sort((a, b) => a.name.compareTo(b.name));
-    }
   }
 }

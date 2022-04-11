@@ -1,8 +1,14 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:plugpack_flutter/functions/plugin/direct_plugin.dart';
 import 'package:plugpack_flutter/functions/plugin/plugin.dart';
 
+part 'bukkit_plugin.g.dart';
+
+@JsonSerializable()
 class BukkitPlugin extends DirectPlugin {
-  BukkitPlugin(String name, PluginType type, String link)
+  String link;
+
+  BukkitPlugin(String name, PluginType type, this.link)
       : super(name, type, _getLink(link));
 
   static String _getLink(String link) {
@@ -14,4 +20,8 @@ class BukkitPlugin extends DirectPlugin {
       return "$link/files/latest";
     }
   }
+
+  factory BukkitPlugin.fromJson(Map<String, dynamic> json) =>
+      _$BukkitPluginFromJson(json);
+  Map<String, dynamic> toJson() => _$BukkitPluginToJson(this);
 }

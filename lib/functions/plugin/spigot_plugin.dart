@@ -1,15 +1,24 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:plugpack_flutter/functions/plugin/plugin.dart';
 
-class SpigotPlugin extends Plugin {
-  late final String id;
-  late final String _link;
+part 'spigot_plugin.g.dart';
 
-  SpigotPlugin(String name, PluginType type, this._link)
-      : id = _link.substring(_link.lastIndexOf('.') + 1, _link.length - 1),
+@JsonSerializable()
+class SpigotPlugin extends Plugin {
+  final String id;
+  final String link;
+
+  SpigotPlugin(String name, PluginType type, this.link)
+      : id = link.substring(link.lastIndexOf('.') + 1, link.length - 1),
         super(name, type);
 
   @override
   String download() {
-    return _link;
+    return link;
   }
+
+  factory SpigotPlugin.fromJson(Map<String, dynamic> json) =>
+      _$SpigotPluginFromJson(json);
+  @override
+  Map<String, dynamic> toJson() => _$SpigotPluginToJson(this);
 }
