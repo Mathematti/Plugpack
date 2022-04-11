@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:plugpack_flutter/functions/generate_id.dart';
 import 'package:plugpack_flutter/functions/plugin/plugin.dart';
 import 'package:plugpack_flutter/functions/plugin/bukkit_plugin.dart';
 import 'package:plugpack_flutter/functions/plugin/custom_plugin.dart';
@@ -15,9 +16,15 @@ class PluginGroup {
   static Plugin selectedPlugin = CustomPlugin("", PluginType.custom, "");
 
   final String groupName;
+  late final String id;
   List<Plugin> plugins = [];
 
   PluginGroup(this.groupName) {
+    id = GenerateId.generateId(8);
+    pluginGroups.add(this);
+  }
+
+  PluginGroup.withId(this.groupName, this.id) {
     pluginGroups.add(this);
   }
 
@@ -41,6 +48,15 @@ class PluginGroup {
     plugins.sort((a, b) => a.name.compareTo(b.name));
   }
 
+  static PluginGroup? getGroupById(String id) {
+    for (PluginGroup group in PluginGroup.pluginGroups) {
+      if (group.id == id) {
+        return group;
+      }
+    }
+    return null;
+  }
+
   buildTitle(BuildContext context) {
     return Text(
       groupName,
@@ -48,7 +64,17 @@ class PluginGroup {
     );
   }
 
-  factory PluginGroup.fromJson(Map<String, dynamic> json) =>
-      _$PluginGroupFromJson(json);
+  factory PluginGroup.fromJson(Map<String, dynamic> json) {
+    PluginGroup? group = getGroupById(json['id'] as String);
+    if (group != null) {
+      return group;
+    }
+
+    return PluginGroup.withId(json['groupName'] as String, json['id'] as String)
+      ..plugins = (json['plugins'] as List<dynamic>)
+          .map((e) => Plugin.fromJson(e as Map<String, dynamic>))
+          .toList();
+  }
+
   Map<String, dynamic> toJson() => _$PluginGroupToJson(this);
 }
