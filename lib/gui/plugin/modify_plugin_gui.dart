@@ -20,7 +20,7 @@ class _ModifyPluginGUIState extends State<ModifyPluginGUI> {
   void save(BuildContext context) {
     PluginGroup.selectedPluginGroup!.plugins.remove(PluginGroup.selectedPlugin);
     PluginGroup.selectedPluginGroup!
-        .addPlugin(nameController.text, _pluginType, "https://myriadical.com");
+        .addPlugin(nameController.text, _pluginType, linkController.text);
     Navigator.of(context).pop(true);
   }
 
