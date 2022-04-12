@@ -10,12 +10,13 @@ CustomPlugin _$CustomPluginFromJson(Map<String, dynamic> json) => CustomPlugin(
       json['name'] as String,
       $enumDecode(_$PluginTypeEnumMap, json['type']),
       json['downloadCommand'] as String,
-    );
+    )..id = json['id'] as String;
 
 Map<String, dynamic> _$CustomPluginToJson(CustomPlugin instance) =>
     <String, dynamic>{
       'name': instance.name,
       'type': _$PluginTypeEnumMap[instance.type],
+      'id': instance.id,
       'downloadCommand': instance.downloadCommand,
     };
 

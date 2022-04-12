@@ -10,12 +10,13 @@ BukkitPlugin _$BukkitPluginFromJson(Map<String, dynamic> json) => BukkitPlugin(
       json['name'] as String,
       $enumDecode(_$PluginTypeEnumMap, json['type']),
       json['link'] as String,
-    );
+    )..id = json['id'] as String;
 
 Map<String, dynamic> _$BukkitPluginToJson(BukkitPlugin instance) =>
     <String, dynamic>{
       'name': instance.name,
       'type': _$PluginTypeEnumMap[instance.type],
+      'id': instance.id,
       'link': instance.link,
     };
 

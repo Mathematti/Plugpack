@@ -6,10 +6,10 @@ part of 'plugin.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-
 Map<String, dynamic> _$PluginToJson(Plugin instance) => <String, dynamic>{
       'name': instance.name,
       'type': _$PluginTypeEnumMap[instance.type],
+      'id': instance.id,
     };
 
 const _$PluginTypeEnumMap = {

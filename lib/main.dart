@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plugpack_flutter/functions/plugin/plugin.dart';
 
 import 'package:plugpack_flutter/functions/server.dart';
 import 'package:plugpack_flutter/functions/plugin_group.dart';
@@ -56,7 +57,7 @@ class _PlugpackMainState extends State<PlugpackMain> {
         child: Text(
           "You currently have ${Server.servers.length} servers with "
           "${PluginGroup.pluginGroups.length} plugin groups and "
-          "a total of ${totalPlugins()} plugins set up.",
+          "a total of ${totalPlugins()} (${Plugin.plugins.length} unique) plugins set up.",
           style: const TextStyle(fontSize: 16),
         ),
         padding: const EdgeInsets.all(10),
