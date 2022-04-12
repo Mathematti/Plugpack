@@ -162,7 +162,7 @@ class _AllPluginGroupListGUIState extends State<AllPluginGroupListGUI> {
       floatingActionButton: FloatingActionButton(
         tooltip: "Add plugin group",
         onPressed: () {
-          Navigator.of(context).pushNamed("/addPluginGroup").then((_) {
+          Navigator.of(context).pushNamed("/addNewPluginGroup").then((_) {
             setState(() {});
           });
         },

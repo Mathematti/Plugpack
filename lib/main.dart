@@ -153,6 +153,7 @@ class ContentState extends State<Content> {
       routes: {
         "/addServer": (BuildContext context) => ServerGUI(),
         "/addPluginGroup": (BuildContext context) => const PluginGroupGUI(),
+        "/addNewPluginGroup": (BuildContext context) => const AddNewPluginGroupGUI(),
         "/listPluginGroups": (BuildContext context) =>
             const PluginGroupListGUI(),
         "/addPlugin": (BuildContext context) => const AddPluginGUI(),

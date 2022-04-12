@@ -69,7 +69,7 @@ class _PluginGroupGUIState extends State<PluginGroupGUI> {
                     decoration: InputDecoration(
                       labelText: "Name",
                       prefixIcon:
-                      const Icon(Icons.drive_file_rename_outline_rounded),
+                          const Icon(Icons.drive_file_rename_outline_rounded),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -104,12 +104,12 @@ class _PluginGroupGUIState extends State<PluginGroupGUI> {
                             items: PluginGroup.pluginGroups
                                 .map<DropdownMenuItem<PluginGroup>>(
                                     (PluginGroup value) =>
-                                    DropdownMenuItem<PluginGroup>(
-                                      value: value,
-                                      child: Text(
-                                        value.groupName,
-                                      ),
-                                    ))
+                                        DropdownMenuItem<PluginGroup>(
+                                          value: value,
+                                          child: Text(
+                                            value.groupName,
+                                          ),
+                                        ))
                                 .toList(),
                             onChanged: (PluginGroup? newValue) {
                               setState(() {
@@ -129,6 +129,51 @@ class _PluginGroupGUIState extends State<PluginGroupGUI> {
           ),
         ),
       ]),
+    );
+  }
+}
+
+class AddNewPluginGroupGUI extends StatefulWidget {
+  const AddNewPluginGroupGUI({Key? key}) : super(key: key);
+
+  @override
+  _AddNewPluginGroupGUIState createState() => _AddNewPluginGroupGUIState();
+}
+
+class _AddNewPluginGroupGUIState extends State<AddNewPluginGroupGUI> {
+  final nameController = TextEditingController();
+
+  void save(BuildContext context) {
+    PluginGroup.addPluginGroup(nameController.text);
+    Navigator.of(context).pop(true);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Add plugin group"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                save(context);
+              },
+              icon: const Icon(Icons.save_rounded)),
+        ],
+      ),
+      body: Container(
+        child: TextFormField(
+          controller: nameController,
+          decoration: InputDecoration(
+            labelText: "Name",
+            prefixIcon: const Icon(Icons.drive_file_rename_outline_rounded),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ),
+        padding: const EdgeInsets.all(10),
+      ),
     );
   }
 }

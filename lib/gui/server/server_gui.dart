@@ -24,7 +24,7 @@ class _ServerListGUIState extends State<ServerListGUI> {
           Container(
             child: Text(
                 Server.servers.isEmpty
-                    ? "Please add  a server first!"
+                    ? "Please add a server first!"
                     : "Your servers:",
                 style: const TextStyle(fontSize: 18)),
             margin: const EdgeInsets.all(20),
