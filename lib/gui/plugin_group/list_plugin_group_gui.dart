@@ -12,9 +12,9 @@ class PluginGroupListGUI extends StatefulWidget {
 
 class _PluginGroupListGUIState extends State<PluginGroupListGUI> {
   void delete() {
-    PluginGroup.pluginGroups.remove(PluginGroup.selectedPluginGroup);
-    PluginGroup.selectedPluginGroup = null;
-    contentStateKey.currentState!.updateIndex(1);
+    Server.servers.remove(Server.selectedServer);
+    Server.selectedServer = null;
+    Navigator.of(context).pop(true);
   }
 
   @override
@@ -24,9 +24,9 @@ class _PluginGroupListGUIState extends State<PluginGroupListGUI> {
         centerTitle: true,
         backgroundColor: Colors.teal,
         title: Text(
-            "Plugpack - ${Server.selectedServer.serverName == ""
+            "Plugpack - ${Server.selectedServer?.serverName == ""
                 ? "No server selected"
-                : "Server \"" + Server.selectedServer.serverName + "\""}"),
+                : "Server \"" + Server.selectedServer!.serverName + "\""}"),
         actions: [
           IconButton(
             onPressed: () {
@@ -40,7 +40,7 @@ class _PluginGroupListGUIState extends State<PluginGroupListGUI> {
         children: [
           Container(
             child: Text(
-              Server.selectedServer.serverName == ""
+              Server.selectedServer?.serverName == ""
                   ? "Please select/create a server first!"
                   : "Plugin groups:",
               style: const TextStyle(fontSize: 18),
@@ -49,9 +49,9 @@ class _PluginGroupListGUIState extends State<PluginGroupListGUI> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: Server.selectedServer.pluginGroups.length,
+              itemCount: Server.selectedServer?.pluginGroups.length,
               itemBuilder: (context, index) {
-                final pluginGroup = Server.selectedServer.pluginGroups[index];
+                final pluginGroup = Server.selectedServer?.pluginGroups[index];
                 return Card(
                   elevation: 5,
                   color: Colors.teal.shade100,
@@ -64,7 +64,7 @@ class _PluginGroupListGUIState extends State<PluginGroupListGUI> {
                   ),
                   margin: const EdgeInsets.all(10),
                   child: ListTile(
-                    title: pluginGroup.buildTitle(context),
+                    title: pluginGroup?.buildTitle(context),
                     contentPadding: const EdgeInsets.all(10),
                     onTap: () {
                       PluginGroup.selectedPluginGroup = pluginGroup;

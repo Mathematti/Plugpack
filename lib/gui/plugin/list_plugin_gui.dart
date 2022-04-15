@@ -11,7 +11,18 @@ class PluginListGUI extends StatefulWidget {
 
 class _PluginListGUIState extends State<PluginListGUI> {
   void delete() {
-    Server.selectedServer.pluginGroups.remove(PluginGroup.selectedPluginGroup);
+    Server.selectedServer?.pluginGroups.remove(PluginGroup.selectedPluginGroup);
+    bool isUsed = false;
+    for (Server server in Server.servers) {
+      if (server.pluginGroups.contains(PluginGroup.selectedPluginGroup)) {
+        isUsed = true;
+      }
+    }
+
+    if (!isUsed) {
+      PluginGroup.pluginGroups.remove(PluginGroup.selectedPluginGroup);
+    }
+
     PluginGroup.selectedPluginGroup = null;
     Navigator.of(context).pop(true);
   }

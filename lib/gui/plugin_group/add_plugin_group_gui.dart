@@ -17,10 +17,10 @@ class _PluginGroupGUIState extends State<PluginGroupGUI> {
 
   void save(BuildContext context) {
     if (addExisting) {
-      Server.selectedServer.addPluginGroup(_selectedGroup!);
+      Server.selectedServer?.addPluginGroup(_selectedGroup!);
     } else {
       PluginGroup.addPluginGroup(nameController.text);
-      Server.selectedServer.addPluginGroup(PluginGroup.pluginGroups.last);
+      Server.selectedServer?.addPluginGroup(PluginGroup.pluginGroups.last);
     }
     Navigator.of(context).pop(true);
   }

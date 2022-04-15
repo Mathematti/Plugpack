@@ -7,7 +7,7 @@ part 'server.g.dart';
 @JsonSerializable()
 class Server {
   static List<Server> servers = [];
-  static Server selectedServer = Server("");
+  static Server? selectedServer;
 
   final String serverName;
   List<PluginGroup> pluginGroups = [];
