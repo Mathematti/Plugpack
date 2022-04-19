@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:plugpack_flutter/functions/generate_id.dart';
 import 'package:plugpack_flutter/functions/plugin/bukkit_plugin.dart';
@@ -25,13 +24,6 @@ abstract class Plugin {
   }
 
   String download();
-
-  buildTitle(BuildContext context) {
-    return Text(
-      name,
-      style: const TextStyle(color: Colors.black),
-    );
-  }
 
   static Plugin? getPluginById(String id) {
     for (Plugin plugin in Plugin.plugins) {

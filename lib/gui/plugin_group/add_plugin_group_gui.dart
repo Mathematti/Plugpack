@@ -280,7 +280,10 @@ class _AddNewPluginGroupGUIState extends State<AddNewPluginGroupGUI> {
                             ),
                             margin: const EdgeInsets.all(10),
                             child: CheckboxListTile(
-                              title: pluginGroup.buildTitle(context),
+                              title: Text(
+                                pluginGroup.groupName,
+                                style: const TextStyle(color: Colors.black),
+                              ),
                               contentPadding: const EdgeInsets.all(10),
                               onChanged: (bool? enabled) {
                                 setState(() {

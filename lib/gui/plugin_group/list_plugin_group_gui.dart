@@ -24,9 +24,7 @@ class _PluginGroupListGUIState extends State<PluginGroupListGUI> {
         centerTitle: true,
         backgroundColor: Colors.teal,
         title: Text(
-            "Plugpack - ${Server.selectedServer?.serverName == ""
-                ? "No server selected"
-                : "Server \"" + Server.selectedServer!.serverName + "\""}"),
+            "Plugpack - ${Server.selectedServer?.serverName == "" ? "No server selected" : "Server \"" + Server.selectedServer!.serverName + "\""}"),
         actions: [
           IconButton(
             onPressed: () {
@@ -64,12 +62,15 @@ class _PluginGroupListGUIState extends State<PluginGroupListGUI> {
                   ),
                   margin: const EdgeInsets.all(10),
                   child: ListTile(
-                    title: pluginGroup?.buildTitle(context),
+                    title: Text(
+                      pluginGroup == null ? "" : pluginGroup.groupName,
+                      style: const TextStyle(color: Colors.black),
+                    ),
                     contentPadding: const EdgeInsets.all(10),
                     onTap: () {
                       PluginGroup.selectedPluginGroup = pluginGroup;
                       Navigator.of(context).pushNamed("/listPlugins").then(
-                            (_) {
+                        (_) {
                           setState(() {});
                         },
                       );
@@ -143,7 +144,10 @@ class _AllPluginGroupListGUIState extends State<AllPluginGroupListGUI> {
                   ),
                   margin: const EdgeInsets.all(10),
                   child: ListTile(
-                    title: pluginGroup.buildTitle(context),
+                    title: Text(
+                      pluginGroup.groupName,
+                      style: const TextStyle(color: Colors.black),
+                    ),
                     contentPadding: const EdgeInsets.all(10),
                     onTap: () {
                       PluginGroup.selectedPluginGroup = pluginGroup;

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:plugpack_flutter/functions/generate_id.dart';
 import 'package:plugpack_flutter/functions/plugin/plugin.dart';
@@ -55,13 +54,6 @@ class PluginGroup {
       }
     }
     return null;
-  }
-
-  buildTitle(BuildContext context) {
-    return Text(
-      groupName,
-      style: const TextStyle(color: Colors.black),
-    );
   }
 
   factory PluginGroup.fromJson(Map<String, dynamic> json) {

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:plugpack_flutter/functions/plugin_group.dart';
 
@@ -22,13 +21,6 @@ class Server {
 
   void addPluginGroup(PluginGroup group) {
     pluginGroups.add(group);
-  }
-
-  buildTitle(BuildContext context) {
-    return Text(
-      serverName,
-      style: const TextStyle(color: Colors.black),
-    );
   }
 
   factory Server.fromJson(Map<String, dynamic> json) => _$ServerFromJson(json);

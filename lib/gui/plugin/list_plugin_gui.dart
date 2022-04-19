@@ -71,7 +71,10 @@ class _PluginListGUIState extends State<PluginListGUI> {
                   ),
                   margin: const EdgeInsets.all(10),
                   child: ListTile(
-                    title: plugin.buildTitle(context),
+                    title: Text(
+                      plugin.name,
+                      style: const TextStyle(color: Colors.black),
+                    ),
                     contentPadding: const EdgeInsets.all(10),
                     onTap: () {
                       PluginGroup.selectedPlugin = plugin;

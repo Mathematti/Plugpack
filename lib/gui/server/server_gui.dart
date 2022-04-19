@@ -46,7 +46,10 @@ class _ServerListGUIState extends State<ServerListGUI> {
                   ),
                   margin: const EdgeInsets.all(10),
                   child: ListTile(
-                    title: server.buildTitle(context),
+                    title: Text(
+                      server.serverName,
+                      style: const TextStyle(color: Colors.black),
+                    ),
                     contentPadding: const EdgeInsets.all(10),
                     onTap: () {
                       Server.selectedServer = server;
