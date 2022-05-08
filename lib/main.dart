@@ -56,11 +56,20 @@ class _PlugpackMainState extends State<PlugpackMain> {
         ],
       ),
       body: Container(
-        child: Text(
-          "You currently have ${Server.servers.length} servers with "
-          "${PluginGroup.pluginGroups.length} plugin groups and "
-          "a total of ${totalPlugins()} (${Plugin.plugins.length} unique) plugins set up.",
-          style: const TextStyle(fontSize: 16),
+        child: Column(
+          children: [
+            const Text(
+              "Current statistics:",
+              style: TextStyle(fontSize: 18),
+            ),
+            Text(
+              "- ${Server.servers.length} servers\n"
+              "- ${PluginGroup.pluginGroups.length} plugin groups\n"
+              "- ${totalPlugins()} plugins\n"
+              "- ${Plugin.plugins.length} unique plugins\n",
+              style: const TextStyle(fontSize: 16),
+            ),
+          ],
         ),
         padding: const EdgeInsets.all(10),
       ),
@@ -155,7 +164,8 @@ class ContentState extends State<Content> {
       routes: {
         "/addServer": (BuildContext context) => ServerGUI(),
         "/addPluginGroup": (BuildContext context) => const PluginGroupGUI(),
-        "/addNewPluginGroup": (BuildContext context) => const AddNewPluginGroupGUI(),
+        "/addNewPluginGroup": (BuildContext context) =>
+            const AddNewPluginGroupGUI(),
         "/listPluginGroups": (BuildContext context) =>
             const PluginGroupListGUI(),
         "/addPlugin": (BuildContext context) => const AddPluginGUI(),
